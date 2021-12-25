@@ -8,9 +8,9 @@ namespace Data.Abstract
 {
     public interface IUnitOfWork
     {
-        IProductRepository Product { get; }
-        ICategoryRepository Category { get; }
+        IProductRepository Products { get; }
+        ICategoryRepository Categories { get; }
         Task CommitAsync();
-        Task Commit();
+        void Commit();
     }
 }
