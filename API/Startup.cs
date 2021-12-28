@@ -1,6 +1,10 @@
+using Core.Data;
+using Core.Data.EntityFramework;
+using Core.Services;
 using Data.Abstract;
 using Data.Concrete;
 using Data.Concrete.EntityFramework.Contexts;
+using Data.Concrete.EntityFramework.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +14,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Service.Abstract;
+using Service.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace API
 {
@@ -29,11 +36,18 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options => {
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddScoped(typeof(IEntityRepository<>), typeof(EfEntityRepositoryBase<>));
+            services.AddScoped(typeof(IService<>), typeof(ServiceBase<>));
+            services.AddScoped(typeof(ICategoryService), typeof(CategoryService));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddDbContext<AppDbContext>(options =>
+            {
                 options.UseSqlServer(Configuration["ConnectionStrings:SqlConStr"].ToString());
             });
 
-            services.AddScoped<IUnitOfWork,UnitOfWork>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
