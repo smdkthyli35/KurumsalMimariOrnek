@@ -41,7 +41,7 @@ namespace API
             services.AddScoped(typeof(IEntityRepository<>), typeof(EfEntityRepositoryBase<>));
             services.AddScoped(typeof(IService<>), typeof(ServiceBase<>));
             services.AddScoped(typeof(ICategoryService), typeof(CategoryService));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<AppDbContext>(options =>
             {

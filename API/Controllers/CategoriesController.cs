@@ -60,7 +60,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [HttpGet("{id}/products")]
+        [HttpGet("{id}/product")]
         public async Task<IActionResult> GetWithProductsByIdAsync(int id)
         {
             var category = await _categoryService.GetWithProductByIdAsync(id);
