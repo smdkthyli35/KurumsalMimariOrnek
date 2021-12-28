@@ -51,5 +51,23 @@ namespace API.Controllers
             var updateCategory = _categoryService.Update(_mapper.Map<Category>(categoryDto));
             return NoContent();
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult Remove(int id)
+        {
+            var category = _categoryService.GetByIdAsync(id).Result;
+            _categoryService.Remove(category);
+            return NoContent();
+        }
+
+        [HttpGet("{id}/products")]
+        public async Task<IActionResult> GetWithProductsByIdAsync(int id)
+        {
+            var category = await _categoryService.GetWithProductByIdAsync(id);
+            return Ok(_mapper.Map<CategoryWithProductDto>(category));
+        }
+
+
+
     }
 }

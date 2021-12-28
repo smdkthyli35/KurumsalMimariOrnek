@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Entities.Concrete;
 using Entities.DTOs.Category;
+using Entities.DTOs.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,12 @@ namespace API.Mapping
         {
             CreateMap<Category, CategoryDto>();
             CreateMap<CategoryDto, Category>();
+
+            CreateMap<Product, ProductDto>();
+            CreateMap<ProductDto, Product>();
+
+            CreateMap<ProductWithCategoryDto, Category>();
+            CreateMap<Category, ProductWithCategoryDto>();
         }
     }
 }
